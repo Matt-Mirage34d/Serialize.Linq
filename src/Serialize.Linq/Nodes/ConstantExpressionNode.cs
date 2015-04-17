@@ -8,6 +8,7 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
@@ -22,7 +23,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "C")]   
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ConstantExpressionNode : ExpressionNode<ConstantExpression>
@@ -84,7 +85,11 @@ namespace Serialize.Linq.Nodes
                     else
                     {
                         var context = new ExpressionContext();
-                        if (!value.ToType(context).IsInstanceOfType(this.Value))
+
+                        var typedValue = (Type)this.Value;
+
+                        if (!typedValue.GetTypeInfo().IsSubclassOf(value.ToType(context)))
+                        //if (!value.ToType(context) .IsInstanceOfType(this.Value))
                             throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value.ToType(context), this.Value.GetType()));
                     }
                 }

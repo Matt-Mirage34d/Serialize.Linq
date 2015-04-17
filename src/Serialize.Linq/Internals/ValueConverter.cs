@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Reflection;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #endif
@@ -19,7 +20,7 @@ namespace Serialize.Linq.Internals
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
 #if !SILVERLIGHT
-            ,RegexOptions.Compiled
+           // ,RegexOptions.Compiled
 #endif
             );
         private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -90,17 +91,19 @@ namespace Serialize.Linq.Internals
         /// <returns></returns>
         public static object Convert(object value, Type convertTo)
         {
-            if (value == null)
-                return convertTo.IsValueType ? Activator.CreateInstance(convertTo) : null;
+            var convertToInfo = convertTo.GetTypeInfo();
 
-            if (convertTo.IsInstanceOfType(value))
+            if (value == null)
+                return convertToInfo.IsValueType ? Activator.CreateInstance(convertTo) : null;
+
+            if (value.GetType().GetTypeInfo().IsSubclassOf(convertTo))// .IsInstanceOfType(value))
                 return value;
 
             object retval;
             if (TryCustomConvert(value, convertTo, out retval))
                 return retval;
 
-            if (convertTo.IsEnum)
+            if (convertToInfo.IsEnum)
                 return Enum.ToObject(convertTo, value);            
 
             // convert array types
@@ -116,9 +119,9 @@ namespace Serialize.Linq.Internals
             }
 
             // convert nullable types
-            if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (convertToInfo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                var argumentTypes = convertTo.GetGenericArguments();
+                var argumentTypes = convertToInfo.GenericTypeArguments;
                 if (argumentTypes.Length == 1)                
                     value = Convert(value, argumentTypes[0]);                
             }

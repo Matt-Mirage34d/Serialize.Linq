@@ -18,7 +18,7 @@ namespace Serialize.Linq.Internals
     {
         private int _currentIndex;
         private readonly Type _type;
-        private readonly BindingFlags _bindingFlags;
+       // private readonly BindingFlags _bindingFlags;
         private readonly HashSet<Type> _seenTypes;
         private Type[] _allTypes;
 
@@ -27,8 +27,8 @@ namespace Serialize.Linq.Internals
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public MemberTypeEnumerator(Type type, BindingFlags bindingFlags = BindingFlags.Default)
-            : this(new HashSet<Type>(), type, bindingFlags) { }
+        public MemberTypeEnumerator(Type type)
+            : this(new HashSet<Type>(), type) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberTypeEnumerator"/> class.
@@ -41,7 +41,7 @@ namespace Serialize.Linq.Internals
         /// or
         /// type
         /// </exception>
-        public MemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
+        public MemberTypeEnumerator(HashSet<Type> seenTypes, Type type)
         {
             if(seenTypes == null)
                 throw new ArgumentNullException("seenTypes");
@@ -50,7 +50,6 @@ namespace Serialize.Linq.Internals
 
             _seenTypes = seenTypes;
             _type = type;
-            _bindingFlags = bindingFlags;
 
             _currentIndex = -1;
         }
@@ -148,9 +147,12 @@ namespace Serialize.Linq.Internals
             var types = new List<Type> { type };
             if (type.HasElementType)
                 types.AddRange(this.GetTypesOfType(type.GetElementType()));
-            if (type.IsGenericType)
+
+            var info = type.GetTypeInfo();
+
+            if (info.IsGenericType)
             {
-                foreach (var genericType in type.GetGenericArguments())
+                foreach (var genericType in info.GenericTypeArguments)
                     types.AddRange(this.GetTypesOfType(genericType));
                 
             }
@@ -164,7 +166,8 @@ namespace Serialize.Linq.Internals
         protected virtual Type[] BuildTypes()
         {
             var types = new List<Type>();
-            var members = _type.GetMembers(_bindingFlags);
+            var members = _type.GetTypeInfo().DeclaredMembers;
+
             foreach (var memberInfo in members.Where(this.IsConsideredMember))
                 types.AddRange(this.GetTypesOfType(memberInfo.GetReturnType()));
             return types.ToArray();

@@ -8,9 +8,7 @@
 
 using System;
 using System.IO;
-#if !WINDOWS_PHONE
 using System.Runtime.Serialization;
-#endif
 using System.Runtime.Serialization.Json;
 using Serialize.Linq.Interfaces;
 
@@ -19,7 +17,7 @@ namespace Serialize.Linq.Serializers
     public class JsonSerializer : TextSerializer, IJsonSerializer
     {
 #if !WINDOWS_PHONE
-        protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
+        protected override DataContractJsonSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractJsonSerializer(type, this.GetKnownTypes());
         }

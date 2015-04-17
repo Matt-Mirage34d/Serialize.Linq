@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract(Name = "MIL")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class MemberInfoNodeList : List<MemberInfoNode>

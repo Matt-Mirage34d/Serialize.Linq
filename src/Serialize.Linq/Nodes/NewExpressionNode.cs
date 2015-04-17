@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "N")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class NewExpressionNode : ExpressionNode<NewExpression>

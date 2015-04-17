@@ -27,7 +27,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "MN")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo : MemberInfo

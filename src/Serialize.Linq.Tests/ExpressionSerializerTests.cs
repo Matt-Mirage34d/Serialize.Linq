@@ -30,11 +30,11 @@ namespace Serialize.Linq.Tests
                 Assert.IsTrue(serializer.CanSerializeText, "'{0}' was expected to serialize text.", textSerializer.GetType());
             }
 
-            foreach (var binSerializer in CreateBinarySerializers())
-            {
-                var serializer = new ExpressionSerializer(binSerializer);
-                Assert.IsFalse(serializer.CanSerializeText, "'{0}' was not expected to serialize text.", serializer.GetType());
-            }
+            //foreach (var binSerializer in CreateBinarySerializers())
+            //{
+            //    var serializer = new ExpressionSerializer(binSerializer);
+            //    Assert.IsFalse(serializer.CanSerializeText, "'{0}' was not expected to serialize text.", serializer.GetType());
+            //}
         }
 
         [TestMethod]
@@ -46,11 +46,11 @@ namespace Serialize.Linq.Tests
                 Assert.IsFalse(serializer.CanSerializeBinary, "'{0}' was not expected to serialize binary.", textSerializer.GetType());
             }
 
-            foreach (var binSerializer in CreateBinarySerializers())
-            {
-                var serializer = new ExpressionSerializer(binSerializer);
-                Assert.IsTrue(serializer.CanSerializeBinary, "'{0}' was expected to serialize binary.", serializer.GetType());
-            }
+            //foreach (var binSerializer in CreateBinarySerializers())
+            //{
+            //    var serializer = new ExpressionSerializer(binSerializer);
+            //    Assert.IsTrue(serializer.CanSerializeBinary, "'{0}' was expected to serialize binary.", serializer.GetType());
+            //}
         }
 
         [TestMethod]
@@ -78,51 +78,51 @@ namespace Serialize.Linq.Tests
             }
         }
 
-        [TestMethod]
-        public void SerializeDeserializeBinaryTest()
-        {
-            foreach (var binSerializer in CreateBinarySerializers())
-            {
-                var serializer = new ExpressionSerializer(binSerializer);
-                foreach (var expected in SerializerTestData.TestExpressions)
-                {
-                    var bytes = serializer.SerializeBinary(expected);
+        //[TestMethod]
+        //public void SerializeDeserializeBinaryTest()
+        //{
+        //    foreach (var binSerializer in CreateBinarySerializers())
+        //    {
+        //        var serializer = new ExpressionSerializer(binSerializer);
+        //        foreach (var expected in SerializerTestData.TestExpressions)
+        //        {
+        //            var bytes = serializer.SerializeBinary(expected);
 
-                    this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
+        //            this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
-                    var actual = serializer.DeserializeBinary(bytes);
+        //            var actual = serializer.DeserializeBinary(bytes);
 
-                    if (expected == null)
-                    {
-                        Assert.IsNull(actual, "Input expression was null, but output is {0} for '{1}'", actual, binSerializer.GetType());
-                        continue;
-                    }
-                    Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
-                    ExpressionAssert.AreEqual(expected, actual);
-                }
-            }
-        }
+        //            if (expected == null)
+        //            {
+        //                Assert.IsNull(actual, "Input expression was null, but output is {0} for '{1}'", actual, binSerializer.GetType());
+        //                continue;
+        //            }
+        //            Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
+        //            ExpressionAssert.AreEqual(expected, actual);
+        //        }
+        //    }
+        //}
 
-        [TestMethod]
-        public void SerializeDeserializeBinaryComplexExpressionWithCompileTest()
-        {
-            foreach (var binSerializer in CreateBinarySerializers())
-            {
-                var serializer = new ExpressionSerializer(binSerializer);
+        //[TestMethod]
+        //public void SerializeDeserializeBinaryComplexExpressionWithCompileTest()
+        //{
+        //    foreach (var binSerializer in CreateBinarySerializers())
+        //    {
+        //        var serializer = new ExpressionSerializer(binSerializer);
 
-                var expected = (Expression<Func<Bar, bool>>)(p => p.LastName == "Miller" && p.FirstName.StartsWith("M"));
-                expected.Compile();
+        //        var expected = (Expression<Func<Bar, bool>>)(p => p.LastName == "Miller" && p.FirstName.StartsWith("M"));
+        //        expected.Compile();
 
-                var bytes = serializer.SerializeBinary(expected);
-                this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
+        //        var bytes = serializer.SerializeBinary(expected);
+        //        this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
-                var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeBinary(bytes);
-                Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
-                ExpressionAssert.AreEqual(expected, actual);
+        //        var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeBinary(bytes);
+        //        Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
+        //        ExpressionAssert.AreEqual(expected, actual);
 
-                actual.Compile();
-            }
-        }
+        //        actual.Compile();
+        //    }
+        //}
         
         [TestMethod]
         public void NullableDecimalTest()
@@ -170,17 +170,17 @@ namespace Serialize.Linq.Tests
             SerializeDeserializeExpressionAsText(CreateGuidExpression(), new JsonSerializer());
         }
 
-        [TestMethod]
-        public void SerializeDeserializeGuidValueAsXml()
-        {
-            SerializeDeserializeExpressionAsText(CreateGuidExpression(), new XmlSerializer());
-        }
+        //[TestMethod]
+        //public void SerializeDeserializeGuidValueAsXml()
+        //{
+        //    SerializeDeserializeExpressionAsText(CreateGuidExpression(), new XmlSerializer());
+        //}
 
-        [TestMethod]
-        public void SerializeDeserializeGuidValueAsBinary()
-        {
-            SerializeDeserializeExpressionAsBinary(CreateGuidExpression(), new BinarySerializer());
-        }
+        //[TestMethod]
+        //public void SerializeDeserializeGuidValueAsBinary()
+        //{
+        //    SerializeDeserializeExpressionAsBinary(CreateGuidExpression(), new BinarySerializer());
+        //}
 
         [TestMethod]
         public void ExpressionWithConstantDateTimeAsJson()
@@ -188,17 +188,17 @@ namespace Serialize.Linq.Tests
             SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new JsonSerializer());
         }
 
-        [TestMethod]
-        public void ExpressionWithConstantDateTimeAsXml()
-        {
-            SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new XmlSerializer());
-        }
+        //[TestMethod]
+        //public void ExpressionWithConstantDateTimeAsXml()
+        //{
+        //    SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new XmlSerializer());
+        //}
 
-        [TestMethod]
-        public void ExpressionWithConstantDateTimeAsBinary()
-        {
-            SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeExpression(), new BinarySerializer());
-        }
+        //[TestMethod]
+        //public void ExpressionWithConstantDateTimeAsBinary()
+        //{
+        //    SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeExpression(), new BinarySerializer());
+        //}
 
         private static ConstantExpression CreateConstantDateTimeExpression()
         {
@@ -222,19 +222,19 @@ namespace Serialize.Linq.Tests
         private static Expression SerializeDeserializeExpressionAsBinary(Expression expression, ISerializer serializer)
         {
             var expressionSerializer = new ExpressionSerializer(serializer);
-            var serialized = expressionSerializer.SerializeBinary(expression);
+            var serialized = expressionSerializer.SerializeText(expression);
 
-            return expressionSerializer.DeserializeBinary(serialized);
+            return expressionSerializer.DeserializeText(serialized);
         }
 
         private static IEnumerable<ITextSerializer> CreateTextSerializers()
         {
-            return new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() };
+            return new ITextSerializer[] {new JsonSerializer()}; //, new XmlSerializer() };
         }
 
-        private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
-        {
-            return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer()  };
-        }        
+        //private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
+        //{
+        //    return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer()  };
+        //}        
     }
 }

@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "T")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class TypeNode : Node
@@ -40,29 +40,35 @@ namespace Serialize.Linq.Nodes
             if (type == null)
                 return;
 
-            var isAnonymousType = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                && type.IsGenericType && type.Name.Contains("AnonymousType")
-                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
-                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+            var typeInfo = type.GetTypeInfo();
 
-            if (type.IsGenericType)
+            var isAnonymousType = 
+                //Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)&& 
+                typeInfo.IsGenericType && type.Name.Contains("AnonymousType")
+                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
+                && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+
+            if (typeInfo.IsGenericType)
             {
-                this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
+                this.GenericArguments = typeInfo.GenericTypeArguments.Select(t => new TypeNode(this.Factory, t)).ToArray();
 
                 var typeDefinition = type.GetGenericTypeDefinition();
-                if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
-                    this.Name = typeDefinition.AssemblyQualifiedName;
-                else
-                    this.Name = typeDefinition.FullName;
 
+                //if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
+                //    this.Name = typeDefinition.AssemblyQualifiedName;
+                //else
+                //    this.Name = typeDefinition.FullName;
+
+                this.Name = typeDefinition.AssemblyQualifiedName;
 
             }
             else
             {
-                if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
-                    this.Name = type.AssemblyQualifiedName;
-                else
-                    this.Name = type.FullName;
+                //if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
+                //    this.Name = type.AssemblyQualifiedName;
+                //else
+                //    this.Name = type.FullName;
+                this.Name = type.AssemblyQualifiedName;
             }            
         }
 

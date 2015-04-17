@@ -21,8 +21,8 @@ namespace Serialize.Linq.Internals
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public PropertyMemberTypeEnumerator(Type type, BindingFlags bindingFlags)
-            : this(new HashSet<Type>(), type, bindingFlags) { }
+        public PropertyMemberTypeEnumerator(Type type)
+            : this(new HashSet<Type>(), type) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyMemberTypeEnumerator"/> class.
@@ -30,8 +30,8 @@ namespace Serialize.Linq.Internals
         /// <param name="seenTypes">The seen types.</param>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public PropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
-            : base(seenTypes, type, bindingFlags | BindingFlags.SetProperty | BindingFlags.GetProperty) { }
+        public PropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type)
+            : base(seenTypes, type) { }
 
         /// <summary>
         /// Determines whether the specified member is to be considered.
@@ -42,7 +42,10 @@ namespace Serialize.Linq.Internals
         /// </returns>
         protected override bool IsConsideredMember(MemberInfo member)
         {
-            return (member.MemberType & MemberTypes.Property) == MemberTypes.Property && base.IsConsideredMember(member);
+            if (!(member is PropertyInfo))
+                return false;
+
+            return base.IsConsideredMember(member);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "MC")]   
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class MethodCallExpressionNode : ExpressionNode<MethodCallExpression>

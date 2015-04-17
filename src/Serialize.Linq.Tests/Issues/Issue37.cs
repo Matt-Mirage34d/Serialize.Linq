@@ -22,7 +22,7 @@ namespace Serialize.Linq.Tests.Issues
             expressions.Add(objectExp);
             expressions.Add(stringExp);
 
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new JsonSerializer() })
             {
                 var serializer = new ExpressionSerializer(textSerializer);
                 foreach (var expected in expressions)

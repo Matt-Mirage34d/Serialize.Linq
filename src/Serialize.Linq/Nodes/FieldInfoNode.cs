@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "FI")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class FieldInfoNode : MemberNode<FieldInfo>
@@ -33,7 +33,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<FieldInfo> GetMemberInfosForType(Type type)
         {
-            return type.GetFields();
+            return type.GetTypeInfo().DeclaredFields;
         }
     }
 }

@@ -48,11 +48,13 @@ namespace Serialize.Linq.Internals
                 retval = true;
             }
 
-            if (baseType.IsGenericType)
-                retval = this.AnalyseTypes(baseType.GetGenericArguments(), seen, result) || retval;
-            retval = this.AnalyseTypes(baseType.GetInterfaces(), seen, result) || retval;
-            if (baseType.BaseType != null && baseType.BaseType != typeof(object))
-                retval = this.BuildTypes(baseType.BaseType, seen, result) || retval;
+            var baseTypeInfo = baseType.GetTypeInfo();
+
+            if (baseTypeInfo.IsGenericType)
+                retval = this.AnalyseTypes(baseTypeInfo.GenericTypeArguments, seen, result) || retval;
+            retval = this.AnalyseTypes(baseTypeInfo.ImplementedInterfaces, seen, result) || retval;
+            if (baseTypeInfo.BaseType != null && baseTypeInfo.BaseType != typeof(object))
+                retval = this.BuildTypes(baseTypeInfo.BaseType, seen, result) || retval;
             return retval;
         }
 
@@ -71,7 +73,7 @@ namespace Serialize.Linq.Internals
             if (!this.AnalyseType(baseType, seen, result))
                 return false;
 
-            var enumerator = new ComplexPropertyMemberTypeEnumerator(baseType, BindingFlags.Instance | BindingFlags.Public);
+            var enumerator = new ComplexPropertyMemberTypeEnumerator(baseType);//, BindingFlags.Instance | BindingFlags.Public);
             if (!enumerator.IsConsidered)
                 return false;
             result.Add(baseType);

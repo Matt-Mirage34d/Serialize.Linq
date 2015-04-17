@@ -30,9 +30,9 @@ namespace Serialize.Linq.Tests.Issues
                 let test = "bar"
                 where x == test
                 select x;
-            expressions.Add(strExpr);            
+            expressions.Add(strExpr);
 
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new JsonSerializer() })
             {
                 var serializer = new ExpressionSerializer(textSerializer);
                 foreach (var expected in expressions)

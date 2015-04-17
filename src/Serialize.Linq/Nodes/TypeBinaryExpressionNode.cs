@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "TB")]   
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
 
     #endregion

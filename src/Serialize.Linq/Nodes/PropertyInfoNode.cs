@@ -29,7 +29,7 @@ namespace Serialize.Linq.Nodes
     #endif
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class PropertyInfoNode : MemberNode<PropertyInfo>
@@ -41,7 +41,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<PropertyInfo> GetMemberInfosForType(Type type)
         {
-            return type.GetProperties();
+            return type.GetTypeInfo().DeclaredProperties;
         }
     }
 }

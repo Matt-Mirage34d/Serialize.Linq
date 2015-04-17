@@ -10,6 +10,7 @@ using System.Linq;
 #endregion
 
 using System.Linq.Expressions;
+using System.Xml.Serialization;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
@@ -69,27 +70,27 @@ namespace Serialize.Linq.Extensions
             return expression.ToText(factory, serializer);
         }
 
-        /// <summary>
-        /// Converts an expression to an xml encoded string.
-        /// </summary>
-        /// <param name="expression">The expression.</param>
-        /// <param name="factorySettings">The factory settings to use.</param>
-        /// <returns></returns>
-        public static string ToXml(this Expression expression, FactorySettings factorySettings = null)
-        {
-            return expression.ToXml(expression.GetDefaultFactory(factorySettings));
-        }
+        ///// <summary>
+        ///// Converts an expression to an xml encoded string.
+        ///// </summary>
+        ///// <param name="expression">The expression.</param>
+        ///// <param name="factorySettings">The factory settings to use.</param>
+        ///// <returns></returns>
+        //public static string ToXml(this Expression expression, FactorySettings factorySettings = null)
+        //{
+        //    return expression.ToXml(expression.GetDefaultFactory(factorySettings));
+        //}
 
-        /// <summary>
-        /// Converts an expression to an xml encoded string using the given factory.
-        /// </summary>
-        /// <param name="expression">The expression.</param>
-        /// <param name="factory">The factory.</param>
-        /// <returns></returns>
-        public static string ToXml(this Expression expression, INodeFactory factory)
-        {
-            return expression.ToXml(factory, new XmlSerializer());
-        }
+        ///// <summary>
+        ///// Converts an expression to an xml encoded string using the given factory.
+        ///// </summary>
+        ///// <param name="expression">The expression.</param>
+        ///// <param name="factory">The factory.</param>
+        ///// <returns></returns>
+        //public static string ToXml(this Expression expression, INodeFactory factory)
+        //{
+        //    return expression.ToXml(factory, new JsonSerializer());
+        //}
 
         /// <summary>
         /// Converts an expression to an xml encoded string using the given factory and serializer.

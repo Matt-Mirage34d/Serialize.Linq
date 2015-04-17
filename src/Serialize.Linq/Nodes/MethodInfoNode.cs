@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "MIN")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class MethodInfoNode : MemberNode<MethodInfo>
@@ -34,7 +34,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<MethodInfo> GetMemberInfosForType(Type type)
         {
-            return type.GetMethods();
+            return type.GetTypeInfo().DeclaredMethods;
         }
 
         #region DataMember

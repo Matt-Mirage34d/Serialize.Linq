@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract(Name = "EIL")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ElementInitNodeList : List<ElementInitNode>

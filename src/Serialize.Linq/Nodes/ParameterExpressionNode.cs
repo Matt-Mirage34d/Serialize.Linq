@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "P")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ParameterExpressionNode : ExpressionNode<ParameterExpression>

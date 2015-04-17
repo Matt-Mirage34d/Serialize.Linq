@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "tE")]    
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public abstract class ExpressionNode<TExpression> : ExpressionNode where TExpression : Expression
@@ -71,7 +71,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "E")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public abstract class ExpressionNode : Node

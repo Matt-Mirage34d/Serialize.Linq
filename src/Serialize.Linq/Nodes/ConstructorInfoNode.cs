@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "CI")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ConstructorInfoNode : MemberNode<ConstructorInfo>
@@ -38,7 +38,7 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(Type type)
         {
-            return type.GetConstructors();
+            return type.GetTypeInfo().DeclaredConstructors;
         }
     }
 }

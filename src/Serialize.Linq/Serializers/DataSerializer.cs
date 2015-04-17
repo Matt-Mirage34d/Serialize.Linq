@@ -8,6 +8,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.Serialization.Json;
 using Serialize.Linq.Nodes;
 #if !WINDOWS_PHONE
 using System.Runtime.Serialization;
@@ -37,7 +38,7 @@ namespace Serialize.Linq.Serializers
             return (T)serializer.ReadObject(stream);
         }
 
-        protected abstract XmlObjectSerializer CreateXmlObjectSerializer(Type type);
+        protected abstract DataContractJsonSerializer CreateXmlObjectSerializer(Type type);
 
 #else
 

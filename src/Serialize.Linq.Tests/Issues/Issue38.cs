@@ -17,8 +17,8 @@ namespace Serialize.Linq.Tests.Issues
 
             Expression<Func<Document, bool>> pred = x => x.Orders.AsQueryable().Any(predicate);
 
-            var serializer = new ExpressionSerializer(new BinarySerializer());
-            var value = serializer.SerializeBinary(pred);
+            var serializer = new ExpressionSerializer(new JsonSerializer());
+            var value = serializer.SerializeText(pred);
 
             Assert.IsNotNull(value);
         }
@@ -30,10 +30,10 @@ namespace Serialize.Linq.Tests.Issues
 
             Expression<Func<Document, bool>> pred = x => x.Orders.AsQueryable().Any(predicate);
 
-            var serializer = new ExpressionSerializer(new BinarySerializer());
-            var value = serializer.SerializeBinary(pred);
+            var serializer = new ExpressionSerializer(new JsonSerializer());
+            var value = serializer.SerializeText(pred); //.SerializeBinary(pred);
 
-            var expression = serializer.DeserializeBinary(value);
+            var expression = serializer.DeserializeText(value);
             Assert.IsNotNull(expression);
         }
 

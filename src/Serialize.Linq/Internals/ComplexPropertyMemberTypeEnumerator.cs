@@ -37,8 +37,8 @@ namespace Serialize.Linq.Internals
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public ComplexPropertyMemberTypeEnumerator(Type type, BindingFlags bindingFlags)
-            : this(new HashSet<Type>(), type, bindingFlags) { }
+        public ComplexPropertyMemberTypeEnumerator(Type type)
+            : this(new HashSet<Type>(), type) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
@@ -46,8 +46,8 @@ namespace Serialize.Linq.Internals
         /// <param name="seenTypes">The seen types.</param>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public ComplexPropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
-            : base(seenTypes, type, bindingFlags) { }
+        public ComplexPropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type)
+            : base(seenTypes, type) { }
 
         /// <summary>
         /// Determines whether [is builtin type] [the specified type].

@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "MLB")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class MemberListBindingNode : MemberBindingNode

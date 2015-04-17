@@ -41,7 +41,7 @@ namespace Serialize.Linq.Tests.Issues
         [TestMethod]
         public void SerializeLambdaWithNullableTest()
         {
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new JsonSerializer() })
             {
                 var serializer = new ExpressionSerializer(textSerializer);
                 var fish = new[]

@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "LI")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ListInitExpressionNode : ExpressionNode<ListInitExpression>

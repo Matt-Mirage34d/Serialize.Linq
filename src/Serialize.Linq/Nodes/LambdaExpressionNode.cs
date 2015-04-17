@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "L")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class LambdaExpressionNode : ExpressionNode<LambdaExpression>

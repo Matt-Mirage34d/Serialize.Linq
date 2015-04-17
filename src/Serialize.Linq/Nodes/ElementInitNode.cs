@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
     [DataContract(Name = "EI")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ElementInitNode : Node

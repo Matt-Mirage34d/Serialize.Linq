@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract(Name = "EL")]
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class ExpressionNodeList : List<ExpressionNode>

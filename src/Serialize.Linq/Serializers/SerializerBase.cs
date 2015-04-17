@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 #if WINDOWS_PHONE7
 using Serialize.Linq.Internals;
 #endif
+using System.Reflection;
 
 namespace Serialize.Linq.Serializers
 {
@@ -57,7 +57,7 @@ namespace Serialize.Linq.Serializers
             {
                 yield return type;
                 yield return type.MakeArrayType();
-                if (!type.IsClass)
+                if (!type.GetTypeInfo().IsClass)
                     yield return typeof(Nullable<>).MakeGenericType(type);
             }
         }

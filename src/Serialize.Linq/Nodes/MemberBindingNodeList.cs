@@ -22,7 +22,7 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract(Name = "MBL")]    
 #endif
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #endregion
     public class MemberBindingNodeList : List<MemberBindingNode>

@@ -18,7 +18,7 @@ namespace Serialize.Linq.Nodes
     #region DataContract
     [DataContract]
 #if !SILVERLIGHT
-    [Serializable]
+    //[Serializable]
 #endif
     #region KnownTypes
     [KnownType(typeof(BinaryExpressionNode))]
@@ -80,7 +80,7 @@ namespace Serialize.Linq.Nodes
         /// </value>
         [IgnoreDataMember]
 #if !SILVERLIGHT
-        [NonSerialized]
+        //[NonSerialized]
 #endif
         public readonly INodeFactory Factory;        
     }

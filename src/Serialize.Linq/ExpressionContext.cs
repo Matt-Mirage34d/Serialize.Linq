@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Reflection;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #else
@@ -49,12 +50,16 @@ namespace Serialize.Linq
                 var type = Type.GetType(n);
                 if (type == null)
                 {
-                    foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                    {
-                        type = assembly.GetType(n);
-                        if (type != null)
-                            break;
-                    }
+                    // Matt Lynch removed this part, because AppDomain is not in Portable Class Libraries.
+
+                    //foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                    //{
+                    //    type = assembly.GetType(n);
+                    //    if (type != null)
+                    //        break;
+                    //}
+
+                    throw new NotSupportedException(string.Format("Unable to find Type: {0}", node.Name));
 
                 }
                 return type;
